@@ -1,0 +1,36 @@
+#include <iostream>
+
+using namespace std;
+
+int maxProfit(int* prices, int n) {
+  // Initialize the minimum price and the maximum profit.
+  int min_price = INT_MAX;
+  int max_profit = 0;
+
+  // Iterate through the array.
+  for (int i = 0; i < n; i++) {
+    // Update the minimum price if the current price is less than the minimum price.
+    if (min_price > prices[i]) {
+      min_price = prices[i];
+    }
+
+    // Update the maximum profit if the current profit is greater than the maximum profit.
+    else if (max_profit < (prices[i] - min_price)) {
+      max_profit = prices[i] - min_price;
+    }
+  }
+
+  return max_profit;
+}
+
+int main() {
+  // Create an array.
+  int prices[] = {7, 1, 5, 3, 6, 4};
+
+  // Find the maximum profit.
+  int max_profit = maxProfit(prices, sizeof(prices) / sizeof(prices[0]));
+
+  cout << "The maximum profit is " << max_profit << endl;
+
+  return 0;
+}
