@@ -1,0 +1,147 @@
+#include <iostream>
+
+using namespace std;
+
+int merge(int arr[], int low, int mid, int high) {
+  
+  int temp1[mid - low + 1];
+  int temp2[high - mid];
+
+  
+  for (int i = 0; i < mid - low + 1; i++) {
+    temp1[i] = arr[low + i];
+  }
+  for (int i = 0; i < high - mid; i++) {
+    temp2[i] = arr[mid + 1 + i];
+  }
+
+  
+  int i = 0, j = 0;
+
+
+  int inversions = 0;
+
+
+  while (i < mid - low + 1 && j < high - mid) {
+    if (temp1[i] <= temp2[j]) {
+      arr[low + i + j] = temp1[i];
+      i++;
+    } else {
+      arr[low + i + j] = temp2[j];
+      j++;
+      inversions += mid - low - i;
+    }
+  }
+
+
+  while (i < mid - low + 1) {
+    arr[low + i + j] = temp1[i];
+    i++;
+  }
+  while (j < high - mid) {
+    arr[low + i + j] = temp2[j];
+    j++;
+  }
+
+  return inversions;
+}
+
+int countInversions(int arr[], int low, int high) {
+ 
+  if (low >= high) {
+    return 0;
+  }
+
+  
+  int mid = (low + high) / 2;
+  int inversions1 = countInversions(arr, low, mid);
+  int inversions2 = countInversions(arr, mid + 1, high);
+  int inversions3 = merge(arr, low, mid, high);
+
+  return inversions1 + inversions2 + inversions3;
+}
+
+int main() {
+
+  int arr[] = {1, 5, 2, 3, 4, 6};
+
+  
+  int inversions = countInversions(arr, 0, 5);
+
+
+  cout << "The number of inversions is " << inversions << endl;
+
+  return 0;
+}
+#include <iostream>
+
+using namespace std;
+
+int merge(int arr[], int low, int mid, int high) {
+  
+  int temp1[mid - low + 1];
+  int temp2[high - mid];
+
+ 
+  for (int i = 0; i < mid - low + 1; i++) {
+    temp1[i] = arr[low + i];
+  }
+  for (int i = 0; i < high - mid; i++) {
+    temp2[i] = arr[mid + 1 + i];
+  }
+
+ 
+  int i = 0, j = 0;
+
+
+  int inversions = 0;
+
+  while (i < mid - low + 1 && j < high - mid) {
+    if (temp1[i] <= temp2[j]) {
+      arr[low + i + j] = temp1[i];
+      i++;
+    } else {
+      arr[low + i + j] = temp2[j];
+      j++;
+      inversions += mid - low - i;
+    }
+  }
+
+  
+  while (i < mid - low + 1) {
+    arr[low + i + j] = temp1[i];
+    i++;
+  }
+  while (j < high - mid) {
+    arr[low + i + j] = temp2[j];
+    j++;
+  }
+
+  return inversions;
+}
+
+int countInversions(int arr[], int low, int high) {
+  
+  if (low >= high) {
+    return 0;
+  }
+
+ 
+  int mid = (low + high) / 2;
+  int inversions1 = countInversions(arr, low, mid);
+  int inversions2 = countInversions(arr, mid + 1, high);
+  int inversions3 = merge(arr, low, mid, high);
+
+  return inversions1 + inversions2 + inversions3;
+}
+
+int main() {
+ 
+  int arr[] = {1, 5, 2, 3, 4, 6};
+
+  int inversions = countInversions(arr, 0, 5);
+
+  cout << "The number of inversions is " << inversions << endl;
+
+  return 0;
+}
