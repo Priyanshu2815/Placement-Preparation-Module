@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+
+using namespace std;
+
+vector<vector<int>> findQuadruplets(vector<int> &nums, int target) {
+  unordered_set<vector<int>> quadruplets;
+
+  for (int i = 0; i < nums.size(); i++) {
+    for (int j = i + 1; j < nums.size(); j++) {
+      for (int k = j + 1; k < nums.size(); k++) {
+        for (int l = k + 1; l < nums.size(); l++) {
+          int sum = nums[i] + nums[j] + nums[k] + nums[l];
+          if (sum == target) {
+            quadruplets.insert({nums[i], nums[j], nums[k], nums[l]});
+          }
+        }
+      }
+    }
+  }
+  vector<vector<int>> result;
+  for (vector<int> quadruplet : quadruplets) {
+    result.push_back(quadruplet);
+  }
+
+  return result;
+}
+
+int main() {
+  vector<int> nums = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+  int target = 15;
+
+  vector<vector<int>> quadruplets = findQuadruplets(nums, target);
+
+  for (vector<int> quadruplet : quadruplets) {
+    for (int num : quadruplet) {
+      cout << num << " ";
+    }
+    cout << endl;
+  }
+
+  return 0;
+}
+
