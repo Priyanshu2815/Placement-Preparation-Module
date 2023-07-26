@@ -1,0 +1,23 @@
+#include <iostream>
+
+using namespace std;
+
+int findRepeatingAndMissingNumbers(int arr[], int n) {
+int sum_of_all_numbers = (n * (n + 1)) / 2;
+int sum_of_numbers_in_array = 0;
+ for (int i = 0; i < n; i++) {
+    sum_of_numbers_in_array += arr[i];
+  }
+int repeating_number = sum_of_all_numbers - sum_of_numbers_in_array;
+ int missing_number = repeating_number - arr[repeating_number - 1];
+return repeating_number, missing_number;
+}
+int main() {
+  int arr[] = {1, 2, 3, 4, 5, 5};
+int repeating_number, missing_number;
+  repeating_number, missing_number = findRepeatingAndMissingNumbers(arr, 6);
+cout << "The repeating number is " << repeating_number << endl;
+  cout << "The missing number is " << missing_number << endl;
+
+  return 0;
+}
