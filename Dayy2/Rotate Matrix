@@ -1,0 +1,48 @@
+#include <iostream>
+
+using namespace std;
+
+void rotateMatrix(int matrix[][10], int n) {
+ 
+  for (int i = 0; i < n / 2; i++) {
+    for (int j = 0; j < n - i - 1; j++) {
+      // Swap the elements in the clockwise direction.
+      int temp = matrix[i][j];
+      matrix[i][j] = matrix[n - 1 - j][i];
+      matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j];
+      matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i];
+      matrix[j][n - 1 - i] = temp;
+    }
+  }
+}
+
+int main() {
+  
+  int matrix[10][10] = {
+    {1, 2, 3, 4},
+    {5, 6, 7, 8},
+    {9, 10, 11, 12},
+    {13, 14, 15, 16},
+  };
+
+
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      cout << matrix[i][j] << " ";
+    }
+    cout << endl;
+  }
+
+ 
+  rotateMatrix(matrix, 4);
+
+ 
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      cout << matrix[i][j] << " ";
+    }
+    cout << endl;
+  }
+
+  return 0;
+}
