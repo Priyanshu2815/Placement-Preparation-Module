@@ -1,0 +1,29 @@
+#include <iostream>
+
+using namespace std;
+
+int findDuplicateNumber(int arr[], int n) {
+ 
+  bool seen[n + 1] = {false};
+
+  for (int i = 0; i < n; i++) {
+    if (seen[arr[i]]) {
+ return arr[i];
+    } else {
+     seen[arr[i]] = true;
+    }
+  }
+return -1;
+}
+
+int main() {
+ int arr[] = {1, 2, 3, 4, 5, 5};
+  int duplicateNumber = findDuplicateNumber(arr, 6);
+  if (duplicateNumber != -1) {
+    cout << "The duplicate number is " << duplicateNumber << endl;
+  } else {
+    cout << "There is no duplicate number." << endl;
+  }
+
+  return 0;
+}
