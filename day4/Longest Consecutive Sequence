@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int longestConsecutiveSequence(vector<int> &nums) {
+  unordered_set<int> seen;
+  int max_length = 1;
+  for (int num : nums) {
+    int current_length = 1;
+    if (!seen.count(num - 1)) {
+      int next = num + 1
+      while (seen.count(next)) {
+        current_length++;
+        next++;
+      }
+    }
+    max_length = max(max_length, current_length);
+    seen.insert(num);
+  }
+
+  return max_length;
+}
+
+int main() {
+  vector<int> nums = {1, 9, 3, 10, 4, 20, 2};
+
+  int length = longestConsecutiveSequence(nums);
+
+  cout << "The longest consecutive sequence has length: " << length << endl;
+
+  return 0;
+}
