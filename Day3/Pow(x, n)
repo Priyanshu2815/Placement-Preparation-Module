@@ -1,0 +1,26 @@
+#include <iostream>
+
+using namespace std;
+
+double pow(double x, int n) {
+  if (n == 0) {
+    return 1;
+  } else if (n == 1) {
+    return x;
+  }
+  double half_power = pow(x, n / 2);
+  if (n % 2 == 0) {
+    return half_power * half_power;
+  } else {
+    return x * half_power * half_power;
+  }
+}
+
+int main() {
+  double x = 2.0;
+  int n = 3;
+  double result = pow(x, n);
+  cout << "x^n = " << result << endl;
+
+  return 0;
+}
