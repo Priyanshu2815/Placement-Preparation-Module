@@ -1,0 +1,32 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int countSubarraysWithXORK(vector<int> &nums, int k) {
+  unordered_map<int, int> seen;
+  int count = 0;
+  int current_xor = 0;
+  for (int num : nums) {
+    current_xor ^= num;
+    if (current_xor == k) {
+      count++;
+    } else if (seen.count(current_xor ^ k)) {
+      count += seen[current_xor ^ k];
+    }
+    seen[current_xor]++;
+  }
+
+  return count;
+}
+
+int main() {
+  vector<int> nums = {1, 2, 3, 4, 5};
+  int k = 0;
+
+  int count = countSubarraysWithXORK(nums, k);
+
+  cout << "The number of subarrays with XOR " << k << " is: " << count << endl;
+
+  return 0;
+}
