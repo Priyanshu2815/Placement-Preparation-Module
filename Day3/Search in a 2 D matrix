@@ -1,0 +1,35 @@
+#include <iostream>
+
+using namespace std;
+
+bool searchMatrix(int matrix[], int m, int n, int x) {
+  int i = 0, j = n - 1;
+  while (i < m && j >= 0) {
+    if (matrix[i][j] == x) {
+      return true;
+    } else if (matrix[i][j] < x) {
+      i++;
+    } else {
+      j--;
+    }
+  }
+  return false;
+}
+
+int main() {
+  int matrix[][5] = {
+    {1, 2, 3, 4, 5},
+    {6, 7, 8, 9, 10},
+    {11, 12, 13, 14, 15},
+    {16, 17, 18, 19, 20},
+  };
+  int x = 10;
+  bool found = searchMatrix(matrix, 4, 5, x);
+  if (found) {
+    cout << "The integer is found." << endl;
+  } else {
+    cout << "The integer is not found." << endl;
+  }
+
+  return 0;
+}
