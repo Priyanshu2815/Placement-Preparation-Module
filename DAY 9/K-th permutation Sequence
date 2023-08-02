@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+string getPermutation(int n, int k) {
+  vector<int> nums;
+  for (int i = 1; i <= n; i++) {
+    nums.push_back(i);
+  }
+
+  string permutation = "";
+  while (k > 0) {
+    
+    int index = k - 1;
+    for (int i = 0; i < n; i++) {
+      if (nums[i] == index + 1) {
+        index = i;
+        break;
+      }
+    }
+
+   
+    int temp = nums[index];
+    nums[index] = nums[n - 1];
+    nums[n - 1] = temp;
+
+    permutation += to_string(nums[n - 1]);
+
+   
+    k /= n - 1;
+  }
+
+  return permutation;
+}
+
+int main() {
+  int n = 4;
+  int k = 3;
+  string permutation = getPermutation(n, k);
+
+  cout << "The Kth permutation sequence is: " << permutation << endl;
+
+  return 0;
+}
