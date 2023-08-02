@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Job {
+  int deadline;
+  int profit;
+};
+
+int jobScheduling(vector<Job> jobs) {
+  int n = jobs.size();
+  int dp[n + 1][n + 1];
+  for (int i = 1; i <= n; i++) {
+    for (int j = 1; j <= n; j++) {
+      if (jobs[i - 1].deadline <= j) {
+        dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - jobs[i - 1].deadline] + jobs[i - 1].profit);
+      } else {
+        dp[i][j] = dp[i - 1][j];
+      }
+    }
+  }
+
+  int maxProfit = 0;
+  int noOfJobs = 0;
+  for (int j = 1; j <= n; j++) {
+    if (dp[n][j] > maxProfit) {
+      maxProfit = dp[n][j];
+      noOfJobs = j;
+    }
+  }
+
+  return noOfJobs;
+}
+
+int main() {
+  vector<Job> jobs = {{1, 10}, {2, 20}, {3, 30}, {4, 40}, {5, 50}};
+  int noOfJobs = jobScheduling(jobs);
+
+  cout << "The maximum profit is: " << maxProfit << endl;
+  cout << "The number of jobs done is: " << noOfJobs << endl;
+
+  return 0;
+}
