@@ -1,0 +1,77 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* next;
+};
+
+Node* addTwoLinkedLists(Node* head1, Node* head2) {
+  if (head1 == nullptr) {
+    return head2;
+  } else if (head2 == nullptr) {
+    return head1;
+  }
+
+  Node* dummyHead = new Node();
+  Node* curr = dummyHead;
+  int carry = 0;
+
+  while (head1 != nullptr && head2 != nullptr) {
+    int sum = head1->data + head2->data + carry;
+    curr->next = new Node(sum % 10);
+    carry = sum / 10;
+    curr = curr->next;
+    head1 = head1->next;
+    head2 = head2->next;
+  }
+
+  while (head1 != nullptr) {
+    int sum = head1->data + carry;
+    curr->next = new Node(sum % 10);
+    carry = sum / 10;
+    curr = curr->next;
+    head1 = head1->next;
+  }
+
+  while (head2 != nullptr) {
+    int sum = head2->data + carry;
+    curr->next = new Node(sum % 10);
+    carry = sum / 10;
+    curr = curr->next;
+    head2 = head2->next;
+  }
+
+  if (carry > 0) {
+    curr->next = new Node(carry);
+  }
+
+  return dummyHead->next;
+}
+
+int main() {
+  Node* head1 = new Node();
+  head1->data = 1;
+  head1->next = new Node();
+  head1->next->data = 2;
+  head1->next->next = new Node();
+  head1->next->next->data = 3;
+  head1->next->next->next = nullptr;
+
+  Node* head2 = new Node();
+  head2->data = 4;
+  head2->next = new Node();
+  head2->next->data = 5;
+  head2->next->next = nullptr;
+
+  Node* sumHead = addTwoLinkedLists(head1, head2);
+  cout << "The sum of the two linked lists is: ";
+  while (sumHead != nullptr) {
+    cout << sumHead->data << " ";
+    sumHead = sumHead->next;
+  }
+  cout << endl;
+
+  return 0;
+}
