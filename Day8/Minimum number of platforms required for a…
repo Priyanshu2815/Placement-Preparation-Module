@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int railwayPlatform(vector<int> arrival, vector<int> departure) {
+  int n = arrival.size();
+  int platforms = 1;
+  int maxPlatforms = 1;
+  sort(arrival.begin(), arrival.end());
+  sort(departure.begin(), departure.end());
+  for (int i = 1; i < n; i++) {
+    if (arrival[i] < departure[i - 1]) {
+      platforms++;
+    } else {
+      platforms--;
+    }
+    maxPlatforms = max(maxPlatforms, platforms);
+  }
+
+  return maxPlatforms;
+}
+
+int main() {
+  vector<int> arrival = {1, 3, 5, 7, 10};
+  vector<int> departure = {2, 4, 6, 8, 11};
+  int platforms = railwayPlatform(arrival, departure);
+
+  cout << "The minimum number of platforms needed is: " << platforms << endl;
+
+  return 0;
+}
