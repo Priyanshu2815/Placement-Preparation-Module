@@ -1,0 +1,37 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int trappedWater(vector<int> arr) {
+  int n = arr.size();
+  int maxLeft[n];
+  int maxRight[n];
+  maxLeft[0] = 0;
+  for (int i = 1; i < n; i++) {
+    maxLeft[i] = max(maxLeft[i - 1], arr[i - 1]);
+  }
+
+  maxRight[n - 1] = 0;
+  for (int i = n - 2; i >= 0; i--) {
+    maxRight[i] = max(maxRight[i + 1], arr[i + 1]);
+  }
+  int waterTrapped = 0;
+  for (int i = 0; i < n; i++) {
+    int currentHeight = min(maxLeft[i], maxRight[i]);
+    if (currentHeight > arr[i]) {
+      waterTrapped += currentHeight - arr[i];
+    }
+  }
+
+  return waterTrapped;
+}
+
+int main() {
+  vector<int> arr = {4, 2, 0, 3, 2, 5};
+  int waterTrapped = trappedWater(arr);
+
+  cout << "The amount of water trapped is: " << waterTrapped << endl;
+
+  return 0;
+}
