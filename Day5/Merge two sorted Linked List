@@ -1,0 +1,77 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* next;
+};
+
+Node* mergeSortedLists(Node* head1, Node* head2) {
+  if (head1 == nullptr) {
+    return head2;
+  } else if (head2 == nullptr) {
+    return head1;
+  }
+
+  Node* mergedHead = nullptr;
+  Node* mergedTail = nullptr;
+
+  while (head1 != nullptr && head2 != nullptr) {
+    if (head1->data <= head2->data) {
+      if (mergedHead == nullptr) {
+        mergedHead = head1;
+        mergedTail = head1;
+      } else {
+        mergedTail->next = head1;
+        mergedTail = head1;
+      }
+      head1 = head1->next;
+    } else {
+      if (mergedHead == nullptr) {
+        mergedHead = head2;
+        mergedTail = head2;
+      } else {
+        mergedTail->next = head2;
+        mergedTail = head2;
+      }
+      head2 = head2->next;
+    }
+  }
+
+  if (head1 != nullptr) {
+    mergedTail->next = head1;
+  } else {
+    mergedTail->next = head2;
+  }
+
+  return mergedHead;
+}
+
+int main() {
+  Node* head1 = new Node();
+  head1->data = 1;
+  head1->next = new Node();
+  head1->next->data = 3;
+  head1->next->next = new Node();
+  head1->next->next->data = 5;
+  head1->next->next->next = nullptr;
+
+  Node* head2 = new Node();
+  head2->data = 2;
+  head2->next = new Node();
+  head2->next->data = 4;
+  head2->next->next = new Node();
+  head2->next->next->data = 6;
+  head2->next->next->next = nullptr;
+
+  Node* mergedHead = mergeSortedLists(head1, head2);
+  cout << "The merged linked list is: ";
+  while (mergedHead != nullptr) {
+    cout << mergedHead->data << " ";
+    mergedHead = mergedHead->next;
+  }
+  cout << endl;
+
+  return 0;
+}
