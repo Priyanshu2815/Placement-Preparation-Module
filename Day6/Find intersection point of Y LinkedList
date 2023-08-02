@@ -1,0 +1,79 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* next;
+};
+
+Node* findIntersection(Node* headA, Node* headB) {
+  if (headA == nullptr || headB == nullptr) {
+    return nullptr;
+  }
+
+  Node* ptrA = headA;
+  Node* ptrB = headB;
+  int lenA = 0;
+  int lenB = 0;
+
+  while (ptrA != nullptr) {
+    lenA++;
+    ptrA = ptrA->next;
+  }
+
+  while (ptrB != nullptr) {
+    lenB++;
+    ptrB = ptrB->next;
+  }
+
+  ptrA = headA;
+  ptrB = headB;
+
+  if (lenA > lenB) {
+    for (int i = 0; i < lenA - lenB; i++) {
+      ptrA = ptrA->next;
+    }
+  } else if (lenB > lenA) {
+    for (int i = 0; i < lenB - lenA; i++) {
+      ptrB = ptrB->next;
+    }
+  }
+
+  while (ptrA != nullptr && ptrB != nullptr) {
+    if (ptrA == ptrB) {
+      return ptrA;
+    }
+    ptrA = ptrA->next;
+    ptrB = ptrB->next;
+  }
+
+  return nullptr;
+}
+
+int main() {
+  Node* headA = new Node();
+  headA->data = 1;
+  headA->next = new Node();
+  headA->next->data = 2;
+  headA->next->next = new Node();
+  headA->next->next->data = 3;
+  headA->next->next->next = new Node();
+  headA->next->next->next->data = 4;
+  headA->next->next->next->next = nullptr;
+
+  Node* headB = new Node();
+  headB->data = 5;
+  headB->next = new Node();
+  headB->next->data = 6;
+  headB->next->next = headA->next->next;
+
+  Node* intersection = findIntersection(headA, headB);
+  if (intersection != nullptr) {
+    cout << "The intersection point is: " << intersection->data << endl;
+  } else {
+    cout << "The two linked lists do not intersect." << endl;
+  }
+
+  return 0;
+}
