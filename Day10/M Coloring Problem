@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+bool isSafe(vector<int> &colors, int vertex, int color) {
+  for (int neighbor : colors[vertex]) {
+    if (color == neighbor) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool graphColoring(vector<vector<int>> &adj, int m, int vertex, vector<int> &colors) {
+  if (vertex == adj.size()) {
+    return true;
+  }
+
+  for (int color = 1; color <= m; color++) {
+    if (isSafe(colors, vertex, color)) {
+      colors[vertex] = {color};
+      if (graphColoring(adj, m, vertex + 1, colors)) {
+        return true;
+      }
+      colors[vertex] = {};
+    }
+  }
+
+  return false;
+}
+
+bool canColorGraph(vector<vector<int>> &adj, int m) {
+  vector<int> colors(adj.size(), {});
+  return graphColoring(adj, m, 0, colors);
+}
+
+int main() {
+  vector<vector<int>> adj = {{0, 1}, {1, 2}, {2, 0}, {0, 3}, {3, 1}};
+  int m = 2;
+
+  if (canColorGraph(adj, m)) {
+    cout << "The graph can be colored with at most " << m << " colors" << endl;
+  } else {
+    cout << "The graph cannot be colored with at most " << m << " colors" << endl;
+  }
+
+  return 0;
+}
