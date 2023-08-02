@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void findAllCombinations(vector<int> &candidates, int target, int index, vector<int> &combination, vector<vector<int>> &combinations) {
+  if (target == 0) {
+    combinations.push_back(combination);
+    return;
+  }
+
+  for (int i = index; i < candidates.size(); i++) {
+    if (target - candidates[i] >= 0) {
+      combination.push_back(candidates[i]);
+      findAllCombinations(candidates, target - candidates[i], i + 1, combination, combinations);
+      combination.pop_back();
+    }
+  }
+}
+
+vector<vector<int>> findUniqueCombinations(vector<int> &candidates, int target) {
+  vector<vector<int>> combinations;
+  vector<int> combination;
+  findAllCombinations(candidates, target, 0, combination, combinations);
+
+  return combinations;
+}
+
+int main() {
+  vector<int> candidates = {1, 1, 2, 3, 5};
+  int target = 8;
+  vector<vector<int>> combinations = findUniqueCombinations(candidates, target);
+
+  for (vector<int> combination : combinations) {
+    for (int num : combination) {
+      cout << num << " ";
+    }
+    cout << endl;
+  }
+
+  return 0;
+}
