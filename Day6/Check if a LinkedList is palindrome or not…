@@ -1,0 +1,60 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* next;
+};
+
+bool isPalindrome(Node* head) {
+  if (head == nullptr) {
+    return true;
+  }
+
+  Node* slow = head;
+  Node* fast = head->next;
+
+  while (fast != nullptr && fast->next != nullptr) {
+    slow = slow->next;
+    fast = fast->next->next;
+  }
+  Node* prev = nullptr;
+  Node* curr = slow->next;
+  while (curr != nullptr) {
+    Node* next = curr->next;
+    curr->next = prev;
+    prev = curr;
+    curr = next;
+  }
+  Node* p1 = head;
+  Node* p2 = prev;
+  while (p1 != nullptr && p2 != nullptr) {
+    if (p1->data != p2->data) {
+      return false;
+    }
+    p1 = p1->next;
+    p2 = p2->next;
+  }
+
+  return true;
+}
+
+int main() {
+  Node* head = new Node();
+  head->data = 1;
+  head->next = new Node();
+  head->next->data = 2;
+  head->next->next = new Node();
+  head->next->next->data = 1;
+  head->next->next->next = nullptr;
+
+  bool isPalindrome = isPalindrome(head);
+  if (isPalindrome) {
+    cout << "The linked list is a palindrome." << endl;
+  } else {
+    cout << "The linked list is not a palindrome." << endl;
+  }
+
+  return 0;
+}
