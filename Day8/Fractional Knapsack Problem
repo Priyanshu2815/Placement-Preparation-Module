@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int knapsack(vector<int> profits, vector<int> weights, int capacity) {
+  int n = profits.size();
+  vector<vector<int>> dp(n + 1, vector<int>(capacity + 1, 0));
+  for (int i = 1; i <= n; i++) {
+    for (int w = 1; w <= capacity; w++) {
+      if (weights[i - 1] > w) {
+        dp[i][w] = dp[i - 1][w];
+      } else {
+        dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - weights[i - 1]] + profits[i - 1]);
+      }
+    }
+  }
+
+  return dp[n][capacity];
+}
+
+int main() {
+  vector<int> profits = {1, 6, 10, 12, 13};
+  vector<int> weights = {1, 2, 3, 5, 6};
+  int capacity = 10;
+  int maxProfit = knapsack(profits, weights, capacity);
+
+  cout << "The maximum profit is: " << maxProfit << endl;
+
+  return 0;
+}
