@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+Node* construct_binary_tree(vector<int>& inorder, vector<int>& preorder) {
+  if (inorder.size() == 0) {
+    return nullptr;
+  }
+
+  int root_data = preorder[0];
+  int index = 0;
+  while (inorder[index] != root_data) {
+    index++;
+  }
+
+  Node* root = new Node();
+  root->data = root_data;
+  root->left = construct_binary_tree(inorder, preorder, 0, index - 1);
+  root->right = construct_binary_tree(inorder, preorder, index + 1, inorder.size() - 1);
+
+  return root;
+}
+
+int main() {
+ 
+  vector<int> inorder = {1, 2, 3, 4, 5, 6};
+  vector<int> preorder = {1, 2, 4, 3, 5, 6};
+
+
+  Node* root = construct_binary_tree(inorder, preorder);
+
+
+  for (int i = 0; i < inorder.size(); i++) {
+    cout << inorder[i] << " ";
+  }
+  cout << endl;
+
+  return 0;
+}
