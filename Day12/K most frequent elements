@@ -1,0 +1,37 @@
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+
+using namespace std;
+
+void find_k_most_frequent_elements(int* array, int n, int k) {
+
+  unordered_map<int, int> frequency_map;
+  for (int i = 0; i < n; i++) {
+    frequency_map[array[i]]++;
+  }
+
+  vector<pair<int, int>> frequent_elements;
+  for (auto it = frequency_map.begin(); it != frequency_map.end(); it++) {
+    frequent_elements.push_back(*it);
+  }
+  sort(frequent_elements.begin(), frequent_elements.end(),
+        [](const pair<int, int>& a, const pair<int, int>& b) {
+          return a.second > b.second;
+        });
+  for (int i = 0; i < k; i++) {
+    cout << frequent_elements[i].first << " ";
+  }
+
+  cout << endl;
+}
+
+int main() {
+  int array[] = {1, 2, 3, 1, 1, 2, 3, 2, 3};
+  int n = sizeof(array) / sizeof(array[0]);
+  int k = 3;
+
+  find_k_most_frequent_elements(array, n, k);
+
+  return 0;
+}
