@@ -1,0 +1,46 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int compare_version_numbers(string version1, string version2) {
+
+  int i = 0;
+  int j = 0;
+
+  while (i < version1.size() && j < version2.size()) {
+    
+    if (version1[i] != version2[j]) {
+
+      if (version1[i] > version2[j]) {
+        return 1;
+      } else {
+        return -1;
+      }
+    } else {
+    
+      i++;
+      j++;
+    }
+  }
+
+ 
+  if (i == version1.size() && j == version2.size()) {
+    return 0;
+  } else if (i < version1.size()) {
+    return 1;
+  } else {
+    return -1;
+  }
+}
+
+int main() {
+  string version1 = "1.0.0";
+  string version2 = "1.0.1";
+
+  int comparison_result = compare_version_numbers(version1, version2);
+
+  cout << comparison_result << endl;
+
+  return 0;
+}
