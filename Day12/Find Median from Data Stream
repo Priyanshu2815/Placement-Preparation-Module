@@ -1,0 +1,49 @@
+#include <iostream>
+
+using namespace std;
+
+class MedianFinder {
+private:
+  priority_queue<int> max_heap;
+  priority_queue<int, vector<int>, greater<int>> min_heap;
+
+public:
+  void add(int element) {
+    if (max_heap.empty() || element < max_heap.top()) {
+      max_heap.push(element);
+    } else {
+      min_heap.push(element);
+    }
+
+   
+    if (max_heap.size() - min_heap.size() > 1) {
+      min_heap.push(max_heap.top());
+      max_heap.pop();
+    } else if (min_heap.size() - max_heap.size() > 1) {
+      max_heap.push(min_heap.top());
+      min_heap.pop();
+    }
+  }
+
+  int get_median() {
+    if (max_heap.size() == min_heap.size()) {
+      return (max_heap.top() + min_heap.top()) / 2;
+    } else {
+     
+      return max_heap.top();
+    }
+  }
+};
+
+int main() {
+  MedianFinder median_finder;
+  median_finder.add(1);
+  median_finder.add(3);
+  median_finder.add(2);
+  median_finder.add(4);
+  median_finder.add(5);
+
+  cout << "The median is " << median_finder.get_median() << endl;
+
+  return 0;
+}
