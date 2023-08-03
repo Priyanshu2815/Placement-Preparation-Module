@@ -1,0 +1,48 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+bool is_bst(Node* root) {
+  if (root == nullptr) {
+    return true;
+  }
+
+
+  bool is_left_bst = is_bst(root->left);
+
+
+  bool is_right_bst = is_bst(root->right);
+
+
+  if (root->left != nullptr && root->data <= root->left->data) {
+    return false;
+  }
+
+  if (root->right != nullptr && root->data >= root->right->data) {
+    return false;
+  }
+
+  return is_left_bst && is_right_bst;
+}
+
+int main() {
+  
+  Node* root = new Node();
+  root->data = 10;
+  root->left = new Node();
+  root->left->data = 5;
+  root->right = new Node();
+  root->right->data = 15;
+
+
+  bool is_bst_tree = is_bst(root);
+  cout << "The tree is a BST: " << is_bst_tree << endl;
+
+  return 0;
+}
