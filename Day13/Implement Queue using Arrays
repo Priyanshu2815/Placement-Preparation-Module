@@ -1,0 +1,71 @@
+#include <iostream>
+
+using namespace std;
+
+class Queue {
+private:
+  int* array;
+  int size;
+  int front;
+  int rear;
+
+public:
+  Queue(int size) {
+    this->size = size;
+    array = new int[size];
+    front = -1;
+    rear = -1;
+  }
+
+  void push(int element) {
+    if (rear == size - 1) {
+      cout << "Queue is full" << endl;
+      return;
+    }
+
+    rear++;
+    array[rear] = element;
+  }
+
+  int pop() {
+    if (front == rear) {
+      cout << "Queue is empty" << endl;
+      return -1;
+    }
+
+    front++;
+    int element = array[front];
+    return element;
+  }
+
+  int top() {
+    if (front == rear) {
+      cout << "Queue is empty" << endl;
+      return -1;
+    }
+
+    int element = array[front];
+    return element;
+  }
+
+  bool empty() {
+    return front == rear;
+  }
+
+  int size() {
+    return rear - front + 1;
+  }
+};
+
+int main() {
+  Queue queue(10);
+  queue.push(1);
+  queue.push(2);
+  queue.push(3);
+
+  cout << queue.pop() << endl;
+  cout << queue.pop() << endl;
+  cout << queue.pop() << endl;
+
+  return 0;
+}
