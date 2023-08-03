@@ -1,0 +1,42 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+bool search_key(Node* root, int key) {
+  if (root == nullptr) {
+    return false;
+  }
+
+  if (root->data == key) {
+    return true;
+  } else if (key < root->data) {
+    return search_key(root->left, key);
+  } else {
+    return search_key(root->right, key);
+  }
+}
+
+int main() {
+
+  Node* root = new Node();
+  root->data = 10;
+  root->left = new Node();
+  root->left->data = 5;
+  root->right = new Node();
+  root->right->data = 15;
+ 
+  bool is_key_present = search_key(root, 5);
+  cout << "The key 5 is present: " << is_key_present << endl;
+
+  
+  is_key_present = search_key(root, 15);
+  cout << "The key 15 is present: " << is_key_present << endl;
+
+  return 0;
+}
