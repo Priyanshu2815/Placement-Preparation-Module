@@ -1,0 +1,58 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+Node* construct_bst_from_preorder(vector<int>& preorder) {
+  stack<Node*> s;
+  Node* root = new Node();
+  root->data = preorder[0];
+  s.push(root);
+
+  for (int i = 1; i < preorder.size(); i++) {
+    Node* current_node = new Node();
+    current_node->data = preorder[i];
+
+    while (!s.empty() && s.top()->data < current_node->data) {
+      current_node->left = s.top();
+      s.pop();
+    }
+
+    if (!s.empty()) {
+      s.top()->right = current_node;
+    }
+
+    s.push(current_node);
+  }
+
+  return root;
+}
+
+int main() {
+  
+  vector<int> preorder = {10, 5, 1, 7, 12, 15};
+
+
+  Node* root = construct_bst_from_preorder(preorder);
+
+
+  print_bst(root);
+
+  return 0;
+}
+
+void print_bst(Node* root) {
+  if (root == nullptr) {
+    return;
+  }
+
+  cout << root->data << " ";
+  print_bst(root->left);
+  print_bst(root->right);
+}
