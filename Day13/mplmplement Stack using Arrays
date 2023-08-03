@@ -1,0 +1,55 @@
+#include <iostream>
+
+using namespace std;
+
+class Stack {
+private:
+  int* array;
+  int size;
+  int top;
+
+public:
+  Stack(int size) {
+    this->size = size;
+    array = new int[size];
+    top = -1;
+  }
+
+  void push(int element) {
+    if (top == size - 1) {
+      cout << "Stack is full" << endl;
+      return;
+    }
+
+    top++;
+    array[top] = element;
+  }
+
+  int pop() {
+    if (top == -1) {
+      cout << "Stack is empty" << endl;
+      return -1;
+    }
+
+    int element = array[top];
+    top--;
+    return element;
+  }
+
+  bool empty() {
+    return top == -1;
+  }
+};
+
+int main() {
+  Stack stack(10);
+  stack.push(1);
+  stack.push(2);
+  stack.push(3);
+
+  cout << stack.pop() << endl;
+  cout << stack.pop() << endl;
+  cout << stack.pop() << endl;
+
+  return 0;
+}
