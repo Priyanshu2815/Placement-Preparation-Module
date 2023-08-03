@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+void morris_inorder_traversal(Node* root) {
+  Node* current = root;
+  Node* pre = nullptr;
+
+  while (current != nullptr) {
+    if (current->left == nullptr) {
+      cout << current->data << " ";
+      current = current->right;
+    } else {
+
+      pre = current->left;
+      while (pre->right != nullptr && pre->right != current) {
+        pre = pre->right;
+      }
+
+      if (pre->right == nullptr) {
+        pre->right = current;
+        current = current->left;
+      } else {
+        
+        pre->right = nullptr;
+        cout << current->data << " ";
+        current = current->right;
+      }
+    }
+  }
+}
+
+int main() {
+
+  Node* root = new Node();
+  root->data = 1;
+  root->left = new Node();
+  root->left->data = 2;
+  root->right = new Node();
+  root->right->data = 3;
+  root->right->right = new Node();
+  root->right->right->data = 4;
+
+  morris_inorder_traversal(root);
+
+  return 0;
+}
