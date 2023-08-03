@@ -1,0 +1,51 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+void convert_to_children_sum_tree(Node* root) {
+  if (root == nullptr) {
+    return;
+  }
+
+  int left_sum = 0;
+  int right_sum = 0;
+
+  if (root->left != nullptr) {
+    left_sum = root->left->data;
+  }
+
+  if (root->right != nullptr) {
+    right_sum = root->right->data;
+  }
+
+  root->data = left_sum + right_sum;
+
+  convert_to_children_sum_tree(root->left);
+  convert_to_children_sum_tree(root->right);
+}
+
+int main() {
+
+  Node* root = new Node();
+  root->data = 1;
+  root->left = new Node();
+  root->left->data = 2;
+  root->right = new Node();
+  root->right->data = 3;
+
+ 
+  convert_to_children_sum_tree(root);
+
+
+  cout << root->data << " ";
+  cout << root->left->data << " ";
+  cout << root->right->data << endl;
+
+  return 0;
+}
