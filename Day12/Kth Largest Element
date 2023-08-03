@@ -1,0 +1,29 @@
+#include <iostream>
+
+using namespace std;
+
+void find_kth_largest_and_smallest(int* array, int n, int k) {
+
+  Heap max_heap(k);
+  for (int i = 0; i < k; i++) {
+    max_heap.push(array[i]);
+  }
+  for (int i = k; i < n; i++) 
+    if (array[i] > max_heap.top()) {
+      max_heap.pop();
+      max_heap.push(array[i]);
+    }
+  }
+  cout << "The kth smallest element is " << max_heap.pop() << endl;
+  cout << "The kth largest element is " << max_heap.top() << endl;
+}
+
+int main() {
+  int array[] = {1, 10, 5, 2, 4, 8, 3, 6, 7, 9};
+  int n = sizeof(array) / sizeof(array[0]);
+  int k = 4;
+
+  find_kth_largest_and_smallest(array, n, k);
+
+  return 0;
+}
