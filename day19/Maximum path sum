@@ -1,0 +1,51 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+struct Pair {
+  int max_sum;
+  bool includes_root;
+};
+
+Pair max_sum_path(Node* root) {
+  if (root == nullptr) {
+    return {0, false};
+  }
+
+  Pair left_max_sum_path = max_sum_path(root->left);
+  Pair right_max_sum_path = max_sum_path(root->right);
+
+
+  int max_sum_path_with_current_node = root->data + max(left_max_sum_path.max_sum, right_max_sum_path.max_sum);
+
+
+  int max_sum_path_without_current_node = max(left_max_sum_path.max_sum, right_max_sum_path.max_sum);
+
+  
+  bool max_sum_path_includes_root = max_sum_path_with_current_node > max_sum_path_without_current_node;
+
+  return {max(max_sum_path_with_current_node, max_sum_path_without_current_node), max_sum_path_includes_root};
+}
+
+int main() {
+ 
+  Node* root = new Node();
+  root->data = 1;
+  root->left = new Node();
+  root->left->data = 2;
+  root->right = new Node();
+  root->right->data = 3;
+
+  
+  Pair max_sum_path = max_sum_path(root);
+  cout << "The maximum sum path is: " << max_sum_path.max_sum << endl;
+  cout << "The maximum sum path includes the root: " << max_sum_path.includes_root << endl;
+
+  return 0;
+}
