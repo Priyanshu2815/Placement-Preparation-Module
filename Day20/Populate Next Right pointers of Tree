@@ -1,0 +1,49 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+  Node* next;
+};
+
+void populate_next_right_pointers(Node* root) {
+  if (root == nullptr) {
+    return;
+  }
+
+
+  populate_next_right_pointers(root->left);
+
+
+  Node* rightmost_node_in_left_subtree = root->left;
+  while (rightmost_node_in_left_subtree->right != nullptr) {
+    rightmost_node_in_left_subtree = rightmost_node_in_left_subtree->right;
+  }
+  root->next = rightmost_node_in_left_subtree;
+
+
+  populate_next_right_pointers(root->right);
+}
+
+int main() {
+  
+  Node* root = new Node();
+  root->data = 1;
+  root->left = new Node();
+  root->left->data = 2;
+  root->right = new Node();
+  root->right->data = 3;
+  root->right->right = new Node();
+  root->right->right->data = 4;
+
+  populate_next_right_pointers(root);
+
+  cout << root->next->data << " ";
+  cout << root->left->next->data << " ";
+  cout << root->right->next->data << endl;
+
+  return 0;
+}
