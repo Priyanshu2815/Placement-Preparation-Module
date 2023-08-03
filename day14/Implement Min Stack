@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class MinStack {
+private:
+  vector<int> stack;
+  vector<int> min_stack;
+
+public:
+  void push(int x) {
+    stack.push_back(x);
+    if (min_stack.empty() || x <= min_stack.back()) {
+      min_stack.push_back(x);
+    }
+  }
+
+  void pop() {
+    if (stack.back() == min_stack.back()) {
+      min_stack.pop_back();
+    }
+    stack.pop_back();
+  }
+
+  int top() {
+    return stack.back();
+  }
+
+  int min() {
+    return min_stack.back();
+  }
+};
+
+int main() {
+  MinStack min_stack;
+  min_stack.push(1);
+  min_stack.push(2);
+  min_stack.push(0);
+  cout << min_stack.min() << endl; // 0
+  min_stack.pop();
+  cout << min_stack.min() << endl; // 1
+
+  return 0;
+}
