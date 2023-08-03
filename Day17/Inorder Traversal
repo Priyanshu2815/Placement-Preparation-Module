@@ -1,0 +1,42 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+void inorder_traversal(Node* root) {
+ 
+  if (root == nullptr) {
+    return;
+  }
+
+
+  inorder_traversal(root->left);
+
+ 
+  cout << root->data << " ";
+
+
+  inorder_traversal(root->right);
+}
+
+int main() {
+
+  Node* root = new Node();
+  root->data = 1;
+  root->left = new Node();
+  root->left->data = 2;
+  root->right = new Node();
+  root->right->data = 3;
+  root->right->right = new Node();
+  root->right->right->data = 4;
+
+  inorder_traversal(root);
+
+  return 0;
+}
