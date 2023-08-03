@@ -1,0 +1,89 @@
+#include <iostream>
+
+using namespace std;
+
+class Heap {
+private:
+  int* array;
+  int size;
+  int capacity;
+
+public:
+  Heap(int capacity) {
+    this->array = new int[capacity];
+    this->size = 0;
+    this->capacity = capacity;
+  }
+
+  ~Heap() {
+    delete[] array;
+  }
+
+  void push(int element) {
+    if (size == capacity) {
+  
+      int* new_array = new int[2 * capacity];
+      for (int i = 0; i < size; i++) {
+        new_array[i] = array[i];
+      }
+      delete[] array;
+      array = new_array;
+      capacity *= 2;
+    }
+    array[size] = element;
+    int index = size;
+    while (index > 0 && array[(index - 1) / 2] < array[index]) {
+      int temp = array[(index - 1) / 2];
+      array[(index - 1) / 2] = array[index];
+      array[index] = temp;
+      index = (index - 1) / 2;
+    }
+
+    size++;
+  }
+
+  int pop() {
+    int max_element = array[0];
+    int temp = array[0];
+    array[0] = array[size - 1];
+    array[size - 1] = temp;
+    int index = 0;
+    while (index < size - 1) {
+      int left_child = 2 * index + 1;
+      int right_child = 2 * index + 2;
+      int larger_child = left_child;
+      if (right_child < size && array[right_child] > array[left_child]) {
+        larger_child = right_child;
+      }
+      if (array[larger_child] > array[index]) {
+        int temp = array[index];
+        array[index] = array[larger_child];
+        array[larger_child] = temp;
+        index = larger_child;
+      } else {
+        break;
+      }
+    }
+
+    size--;
+    return max_element;
+  }
+
+  bool empty() {
+    return size == 0;
+  }
+};
+
+int main() {
+  Heap max_heap(10);
+  max_heap.push(10);
+  max_heap.push(15);
+  max_heap.push(5);
+  max_heap.push(20);
+
+  while (!max_heap.empty()) {
+    cout << max_heap.pop() << endl;
+  }
+
+  return 0;
+}
