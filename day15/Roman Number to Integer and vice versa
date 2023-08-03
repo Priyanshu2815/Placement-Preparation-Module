@@ -1,0 +1,75 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int roman_to_integer(string roman) {
+ 
+  const map<char, int> roman_numeral_values = {
+      {'I', 1},
+      {'V', 5},
+      {'X', 10},
+      {'L', 50},
+      {'C', 100},
+      {'D', 500},
+      {'M', 1000}
+  };
+
+
+  int integer_value = 0;
+
+ 
+  for (int i = 0; i < roman.size(); i++) {
+   
+    char roman_numeral = roman[i];
+
+    if (i < roman.size() - 1 && roman_numeral_values[roman_numeral] < roman_numeral_values[roman[i + 1]]) {
+      integer_value -= roman_numeral_values[roman_numeral];
+    } else {
+   
+      integer_value += roman_numeral_values[roman_numeral];
+    }
+  }
+
+
+  return integer_value;
+}
+
+string integer_to_roman(int integer) {
+
+  const vector<string> roman_numeral_strings = {
+      "I",
+      "V",
+      "X",
+      "L",
+      "C",
+      "D",
+      "M"
+  };
+
+  string roman_numeral = "";
+
+ 
+  while (integer > 0) {
+   
+    int roman_numeral_value = roman_numeral_strings.size() - 1;
+    while (roman_numeral_value > 0 && integer - roman_numeral_values[roman_numeral_value] >= 0) {
+      integer -= roman_numeral_values[roman_numeral_value];
+      roman_numeral += roman_numeral_strings[roman_numeral_value];
+    }
+  }
+
+
+  return roman_numeral;
+}
+
+int main() {
+  string roman = "XIV";
+  int integer = roman_to_integer(roman);
+  string roman_from_integer = integer_to_roman(integer);
+
+  cout << roman << " = " << integer << endl;
+  cout << integer << " = " << roman_from_integer << endl;
+
+  return 0;
+}
