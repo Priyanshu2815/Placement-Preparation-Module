@@ -1,0 +1,53 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+Node* flatten_binary_tree(Node* root) {
+  if (root == nullptr) {
+    return nullptr;
+  }
+
+  Node* left_linked_list = flatten_binary_tree(root->left);
+  Node* right_linked_list = flatten_binary_tree(root->right);
+
+  Node* temp = left_linked_list;
+  while (temp->right != nullptr) {
+    temp = temp->right;
+  }
+
+  temp->right = root->right;
+  root->right = left_linked_list;
+  root->left = nullptr;
+
+  return root;
+}
+
+int main() {
+ 
+  Node* root = new Node();
+  root->data = 1;
+  root->left = new Node();
+  root->left->data = 2;
+  root->right = new Node();
+  root->right->data = 3;
+  root->right->right = new Node();
+  root->right->right->data = 4;
+
+
+  Node* flattened_linked_list = flatten_binary_tree(root);
+
+  
+  while (flattened_linked_list != nullptr) {
+    cout << flattened_linked_list->data << " ";
+    flattened_linked_list = flattened_linked_list->right;
+  }
+  cout << endl;
+
+  return 0;
+}
