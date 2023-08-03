@@ -1,0 +1,46 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+Node* lca(Node* root, int n1, int n2) {
+  if (root == nullptr) {
+    return nullptr;
+  }
+
+  if (root->data == n1 || root->data == n2) {
+    return root;
+  }
+
+
+  if (n1 < root->data) {
+    return lca(root->left, n1, n2);
+  }
+
+
+  if (n2 < root->data) {
+    return lca(root->right, n1, n2);
+  }
+e
+  return root;
+}
+
+int main() {
+
+  Node* root = new Node();
+  root->data = 10;
+  root->left = new Node();
+  root->left->data = 5;
+  root->right = new Node();
+  root->right->data = 15;
+
+  Node* lca_node = lca(root, 5, 15);
+  cout << "The LCA of 5 and 15 is: " << lca_node->data << endl;
+
+  return 0;
+}
