@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+Node* construct_bst(vector<int>& keys) {
+  if (keys.size() == 0) {
+    return nullptr;
+  }
+
+  int mid = keys.size() / 2;
+  Node* root = new Node();
+  root->data = keys[mid];
+  root->left = construct_bst(keys.begin(), keys.begin() + mid);
+  root->right = construct_bst(keys.begin() + mid + 1, keys.end());
+
+  return root;
+}
+
+int main() {
+
+  vector<int> keys = {1, 2, 3, 4, 5, 6, 7};
+
+ 
+  Node* root = construct_bst(keys);
+
+  print_bst(root);
+
+  return 0;
+}
+
+void print_bst(Node* root) {
+  if (root == nullptr) {
+    return;
+  }
+
+  cout << root->data << " ";
+  print_bst(root->left);
+  print_bst(root->right);
+}
