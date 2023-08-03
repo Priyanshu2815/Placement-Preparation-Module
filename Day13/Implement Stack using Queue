@@ -1,0 +1,45 @@
+#include <iostream>
+
+using namespace std;
+
+class Stack {
+private:
+  queue<int> q;
+
+public:
+  void push(int element) {
+    q.push(element);
+  }
+
+  int pop() {
+    if (q.empty()) {
+      cout << "Stack is empty" << endl;
+      return -1;
+    }
+
+    int element = q.front();
+    q.pop();
+    if (q.size() == 0) {
+      q.push(element);
+    }
+
+    return element;
+  }
+
+  bool empty() {
+    return q.empty();
+  }
+};
+
+int main() {
+  Stack stack;
+  stack.push(1);
+  stack.push(2);
+  stack.push(3);
+
+  cout << stack.pop() << endl;
+  cout << stack.pop() << endl;
+  cout << stack.pop() << endl;
+
+  return 0;
+}
