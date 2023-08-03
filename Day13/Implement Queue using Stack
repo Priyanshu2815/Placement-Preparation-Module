@@ -1,0 +1,57 @@
+#include <iostream>
+
+using namespace std;
+
+class Queue {
+private:
+  stack<int> s;
+
+public:
+  void enqueue(int element) {
+    s.push(element);
+  }
+
+  int dequeue() {
+    if (s.empty()) {
+      cout << "Queue is empty" << endl;
+      return -1;
+    }
+
+   
+    while (s.size() > 1) {
+      int element = s.top();
+      s.pop();
+      temp_stack.push(element);
+    }
+
+  
+    int element = s.top();
+    s.pop();
+
+  
+    while (!temp_stack.empty()) {
+      int element = temp_stack.top();
+      temp_stack.pop();
+      s.push(element);
+    }
+
+    return element;
+  }
+
+  bool empty() {
+    return s.empty();
+  }
+};
+
+int main() {
+  Queue queue;
+  queue.enqueue(1);
+  queue.enqueue(2);
+  queue.enqueue(3);
+
+  cout << queue.dequeue() << endl;
+  cout << queue.dequeue() << endl;
+  cout << queue.dequeue() << endl;
+
+  return 0;
+}
