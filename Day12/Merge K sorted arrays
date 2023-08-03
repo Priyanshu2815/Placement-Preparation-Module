@@ -1,0 +1,47 @@
+#include <iostream>
+
+using namespace std;
+
+void merge_sorted_arrays(int** arrays, int k, int* merged_array) {
+  int* pointers[k];
+  for (int i = 0; i < k; i++) {
+    pointers[i] = arrays[i];
+  }
+  int indices[k] = {0};
+  while (true) {
+    int min_element = INT_MAX;
+    int min_index = -1;
+    for (int i = 0; i < k; i++) {
+      if (pointers[i] != NULL && pointers[i][indices[i]] < min_element) {
+        min_element = pointers[i][indices[i]];
+        min_index = i;
+      }
+    }
+    if (min_index == -1) {
+      break;
+    }
+
+    merged_array[indices[min_index]] = min_element;
+    indices[min_index]++;
+
+    if (indices[min_index] == arrays[min_index].size()) {
+      pointers[min_index] = NULL;
+    }
+  }
+}
+
+int main() {
+  int arrays[][5] = {{1, 3, 5, 7, 9}, {2, 4, 6, 8, 10}, {11, 13, 15, 17, 19}};
+  int k = 3;
+  int merged_array[15];
+
+  merge_sorted_arrays(arrays, k, merged_array);
+
+  for (int i = 0; i < k * 5; i++) {
+    cout << merged_array[i] << " ";
+  }
+
+  cout << endl;
+
+  return 0;
+}
