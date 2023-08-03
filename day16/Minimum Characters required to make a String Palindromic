@@ -1,0 +1,40 @@
+#include <iostream>
+
+using namespace std;
+
+int min_characters_required(string s) {
+ 
+  int lps[s.size()];
+  lps[0] = 0;
+
+ 
+  for (int i = 1; i < s.size(); i++) {
+  
+    if (s[i] == s[lps[i - 1]]) {
+      lps[i] = lps[i - 1] + 1;
+    } else {
+  
+      lps[i] = 0;
+    }
+  }
+
+  
+  int min_characters_required = s.size();
+
+
+  for (int i = 0; i < s.size(); i++) {
+    if (lps[i] < min_characters_required) {
+      min_characters_required = s.size() - lps[i];
+    }
+  }
+  return min_characters_required;
+}
+
+int main() {
+  string s = "abcdcba";
+  int min_characters_required = min_characters_required(s);
+
+  cout << min_characters_required << endl;
+
+  return 0;
+}
