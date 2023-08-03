@@ -1,0 +1,45 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+bool is_symmetric(Node* root) {
+  if (root == nullptr) {
+    return true;
+  }
+
+  return is_symmetric_helper(root->left, root->right);
+}
+
+bool is_symmetric_helper(Node* left, Node* right) {
+  if (left == nullptr && right == nullptr) {
+    return true;
+  } else if (left != nullptr && right != nullptr) {
+    return left->data == right->data &&
+           is_symmetric_helper(left->left, right->right) &&
+           is_symmetric_helper(left->right, right->left);
+  } else {
+    return false;
+  }
+}
+
+int main() {
+ 
+  Node* root = new Node();
+  root->data = 1;
+  root->left = new Node();
+  root->left->data = 2;
+  root->right = new Node();
+  root->right->data = 2;
+
+
+  bool is_symmetric_tree = is_symmetric(root);
+  cout << "The tree is symmetric: " << is_symmetric_tree << endl;
+
+  return 0;
+}
