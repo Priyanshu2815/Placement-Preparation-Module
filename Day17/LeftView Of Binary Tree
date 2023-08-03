@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+void left_view(Node* root, int level, vector<int>& left_view) {
+  if (root == nullptr) {
+    return;
+  }
+
+  if (level == left_view.size()) {
+    left_view.push_back(root->data);
+  }
+
+  left_view(root->left, level + 1, left_view);
+}
+
+int main() {
+
+  Node* root = new Node();
+  root->data = 1;
+  root->left = new Node();
+  root->left->data = 2;
+  root->right = new Node();
+  root->right->data = 3;
+  root->right->right = new Node();
+  root->right->right->data = 4;
+
+ 
+  vector<int> left_view;
+  left_view(root, 0, left_view);
+
+  for (int i = 0; i < left_view.size(); i++) {
+    cout << left_view[i] << " ";
+  }
+
+  return 0;
+}
