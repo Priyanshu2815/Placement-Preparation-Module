@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int rabin_karp(string text, string pattern) {
+  int pattern_hash = 0;
+  for (int i = 0; i < pattern.size(); i++) {
+    pattern_hash = (pattern_hash * 31 + pattern[i]) % 1000000007;
+  }
+  int text_hash = 0;
+  for (int i = 0; i < pattern.size(); i++) {
+    text_hash = (text_hash * 31 + text[i]) % 1000000007;
+  }
+  for (int i = 0; i <= text.size() - pattern.size(); i++) {
+    if (text_hash == pattern_hash) {
+      bool is_equal = true;
+      for (int j = 0; j < pattern.size(); j++) {
+        if (text[i + j] != pattern[j]) {
+          is_equal = false;
+          break;
+        }
+      }
+
+      if (is_equal) {
+        return i;
+      }
+    }
+
+    text_hash = (text_hash - text[i] * 31) % 1000000007 + text[i + pattern.size()];
+  }
+  return -1;
+}
+
+int main() {
+  string text = "This is a text";
+  string pattern = "is";
+  int index = rabin_karp(text, pattern);
+
+  cout << index << endl;
+
+  return 0;
+}
