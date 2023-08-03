@@ -1,0 +1,52 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+Node* lowest_common_ancestor(Node* root, int x, int y) {
+  if (root == nullptr) {
+    return nullptr;
+  }
+
+  if (root->data == x || root->data == y) {
+    return root;
+  }
+
+  Node* left_lca = lowest_common_ancestor(root->left, x, y);
+  Node* right_lca = lowest_common_ancestor(root->right, x, y);
+
+  if (left_lca != nullptr && right_lca != nullptr) {
+    return root;
+  } else {
+    return left_lca != nullptr ? left_lca : right_lca;
+  }
+}
+
+int main() {
+
+  Node* root = new Node();
+  root->data = 1;
+  root->left = new Node();
+  root->left->data = 2;
+  root->right = new Node();
+  root->right->data = 3;
+  root->right->right = new Node();
+  root->right->right->data = 4;
+
+
+  Node* lca = lowest_common_ancestor(root, 2, 4);
+
+ 
+  if (lca != nullptr) {
+    cout << "The lca of 2 and 4 is: " << lca->data << endl;
+  } else {
+    cout << "The lca of 2 and 4 is: null" << endl;
+  }
+
+  return 0;
+}
