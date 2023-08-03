@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+void print_path(Node* root, int data, vector<int>& path) {
+  if (root == nullptr) {
+    return;
+  }
+
+  path.push_back(root->data);
+
+  if (root->data == data) {
+    cout << "The path from root to the given node is: ";
+    for (int i = 0; i < path.size(); i++) {
+      cout << path[i] << " ";
+    }
+    cout << endl;
+  } else {
+    print_path(root->left, data, path);
+    print_path(root->right, data, path);
+  }
+
+  
+  path.pop_back();
+}
+
+int main() {
+ 
+  Node* root = new Node();
+  root->data = 1;
+  root->left = new Node();
+  root->left->data = 2;
+  root->right = new Node();
+  root->right->data = 3;
+  root->right->right = new Node();
+  root->right->right->data = 4;
+
+  vector<int> path;
+  print_path(root, 3, path);
+
+  return 0;
+}
