@@ -1,0 +1,28 @@
+#include <iostream>
+
+using namespace std;
+
+int max_sum_combination(int* array, int n) {
+  int max_sum = 0;
+  for (int i = 0; i < n; i++) {
+    if (array[i] > max_sum) {
+      max_sum = array[i];
+    }
+    else if (array[i] + max_sum > max_sum) {
+      max_sum = array[i] + max_sum;
+    }
+  }
+
+  return max_sum;
+}
+
+int main() {
+  int array[] = {1, 5, 2, 8, 3, 9};
+  int n = sizeof(array) / sizeof(array[0]);
+
+  int max_sum = max_sum_combination(array, n);
+
+  cout << "The maximum sum combination is " << max_sum << endl;
+
+  return 0;
+}
