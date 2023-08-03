@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int largest_rectangle_area(vector<int> heights) 
+  stack<int> s;
+  int max_area = 0;
+  for (int i = 0; i < heights.size(); i++) {
+    if (heights[i] > heights[s.top()]) {
+      s.push(i);
+    } else {
+      while (!s.empty() && heights[i] <= heights[s.top()]) {
+        int top_element = s.top();
+        s.pop();
+
+        int width = i - top_element;
+        int area = heights[top_element] * width;
+
+        max_area = max(max_area, area);
+      }
+    }
+  }
+  if (!s.empty()) {
+    int width = heights.size() - s.top();
+    int area = heights[s.top()] * width;
+
+    max_area = max(max_area, area);
+  }
+
+  return max_area;
+}
+
+int main() {
+  vector<int> heights = {2, 1, 5, 6, 2, 3};
+  int max_area = largest_rectangle_area(heights);
+
+  cout << max_area << endl;
+
+  return 0;
+}
