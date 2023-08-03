@@ -1,0 +1,33 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+bool is_anagram(string s, string t) {
+  int character_counts[26] = {0};
+  for (char c : s) {
+    character_counts[c - 'a']++;
+  }
+  for (char c : t) {
+    character_counts[c - 'a']--;
+  }
+  for (int i = 0; i < 26; i++) {
+    if (character_counts[i] != 0) {
+      return false;
+    }
+  }
+
+  // Return true
+  return true;
+}
+
+int main() {
+  string s = "anagram";
+  string t = "nagaram";
+
+  bool is_anagram_result = is_anagram(s, t);
+
+  cout << is_anagram_result << endl;
+
+  return 0;
+}
