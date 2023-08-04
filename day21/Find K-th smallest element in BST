@@ -1,0 +1,41 @@
+#include <iostream>
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+int kthSmallest(Node* root, int k) {
+  if (root == nullptr) {
+    return -1;
+  }
+
+  int count = 0;
+  Node* current = root;
+  while (current != nullptr) {
+    if (count == k) {
+      return current->data;
+    } else if (count < k) {
+      count++;
+      current = current->left;
+    } else {
+      current = current->right;
+    }
+  }
+
+  return -1;
+}
+
+int main() {
+  Node* root = new Node{10, nullptr, nullptr};
+  root->left = new Node{5, nullptr, nullptr};
+  root->left->right = new Node{6, nullptr, nullptr};
+  root->right = new Node{15, nullptr, nullptr};
+
+  int k = 3;
+  int kthSmallestElement = kthSmallest(root, k);
+  std::cout << "The kth smallest element is " << kthSmallestElement << std::endl;
+
+  return 0;
+}
