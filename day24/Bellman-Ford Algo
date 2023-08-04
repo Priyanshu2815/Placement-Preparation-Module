@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void bellmanFord(vector<vector<pair<int, int>>>& adj, int start, vector<int>& distances) {
+  distances[start] = 0;
+
+  for (int i = 0; i < adj.size() - 1; i++) {
+    for (int u = 0; u < adj.size(); u++) {
+      for (pair<int, int> neighbor : adj[u]) {
+        int neighborDistance = distances[u] + neighbor.second;
+
+        if (neighborDistance < distances[neighbor.first]) {
+          distances[neighbor.first] = neighborDistance;
+        }
+      }
+    }
+  }
+}
+
+int main() {
+  vector<vector<pair<int, int>>> adj = {{0, 1, 1}, {0, 2, 4}, {1, 3, 2}, {2, 3, 3}};
+  vector<int> distances(adj.size(), INT_MAX);
+
+  bellmanFord(adj, 0, distances);
+
+  for (int distance : distances) {
+    cout << distance << " ";
+  }
+
+  cout << endl;
+
+  return 0;
+}
