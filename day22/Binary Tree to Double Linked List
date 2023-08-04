@@ -1,0 +1,48 @@
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+  Node* prev;
+  Node* next;
+};
+
+Node* convertBinaryTreeToDLL(Node* root) {
+  if (root == nullptr) {
+    return nullptr;
+  }
+
+  Node* leftDLL = convertBinaryTreeToDLL(root->left);
+  Node* rightDLL = convertBinaryTreeToDLL(root->right);
+
+  root->prev = rightDLL;
+  root->next = leftDLL;
+
+  if (leftDLL != nullptr) {
+    leftDLL->next = root;
+  }
+
+  if (rightDLL != nullptr) {
+    rightDLL->prev = root;
+  }
+
+  return root;
+}
+
+int main() {
+  Node* root = new Node(1);
+  root->left = new Node(2);
+  root->right = new Node(3);
+  root->left->left = new Node(4);
+  root->left->right = new Node(5);
+  root->right->left = new Node(6);
+  root->right->right = new Node(7);
+
+  Node* dllHead = convertBinaryTreeToDLL(root);
+
+  while (dllHead != nullptr) {
+    std::cout << dllHead->data << std::endl;
+    dllHead = dllHead->next;
+  }
+
+  return 0;
+}
