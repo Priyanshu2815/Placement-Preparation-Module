@@ -1,0 +1,43 @@
+#include <iostream>
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+Node* ceil(Node* root, int key) {
+  if (root == nullptr) {
+    return nullptr;
+  }
+
+  if (root->data == key) {
+    return root;
+  } else if (root->data < key) {
+    Node* ceilNode = ceil(root->right, key);
+    if (ceilNode != nullptr) {
+      return ceilNode;
+    } else {
+      return root;
+    }
+  } else {
+    return ceil(root->left, key);
+  }
+}
+
+int main() {
+  Node* root = new Node{10, nullptr, nullptr};
+  root->left = new Node{5, nullptr, nullptr};
+  root->left->right = new Node{6, nullptr, nullptr};
+  root->right = new Node{15, nullptr, nullptr};
+
+  int key = 8;
+  Node* ceilNode = ceil(root, key);
+  if (ceilNode != nullptr) {
+    std::cout << "The ceil of " << key << " is " << ceilNode->data << std::endl;
+  } else {
+    std::cout << "The ceil of " << key << " does not exist" << std::endl;
+  }
+
+  return 0;
+}
