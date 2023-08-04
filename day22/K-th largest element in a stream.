@@ -1,0 +1,39 @@
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+class KthLargest {
+  priority_queue<int, vector<int>, greater<int>> minHeap;
+  int k;
+
+public:
+  KthLargest(int k) {
+    this->k = k;
+  }
+
+  void add(int num) {
+    if (minHeap.size() < k) {
+      minHeap.push(num);
+    } else if (num > minHeap.top()) {
+      minHeap.pop();
+      minHeap.push(num);
+    }
+  }
+
+  int findKthLargest() {
+    return minHeap.top();
+  }
+};
+
+int main() {
+  KthLargest kthLargest(3);
+  kthLargest.add(1);
+  kthLargest.add(2);
+  kthLargest.add(3);
+  kthLargest.add(4);
+
+  cout << kthLargest.findKthLargest() << endl;
+
+  return 0;
+}
