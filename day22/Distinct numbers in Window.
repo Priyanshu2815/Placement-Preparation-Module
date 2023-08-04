@@ -1,0 +1,45 @@
+#include <iostream>
+#include <unordered_set>
+
+using namespace std;
+
+int* count_distinct_numbers(int* A, int N, int B) {
+  if (B > N) {
+    return nullptr;
+  }
+
+  int* result = new int[N - B + 1];
+  unordered_set<int> distinct_numbers;
+
+  for (int i = 0; i < B; i++) {
+    distinct_numbers.insert(A[i]);
+  }
+
+  result[0] = distinct_numbers.size();
+
+  for (int i = 1; i < N - B + 1; i++) {
+    distinct_numbers.erase(A[i - 1]);
+    distinct_numbers.insert(A[i + B - 1]);
+    result[i] = distinct_numbers.size();
+  }
+
+  return result;
+}
+
+int main() {
+  int A[] = {1, 2, 1, 3, 4, 2, 3};
+  int N = sizeof(A) / sizeof(A[0]);
+  int B = 3;
+
+  int* result = count_distinct_numbers(A, N, B);
+
+  for (int i = 0; i < N - B + 1; i++) {
+    cout << result[i] << " ";
+  }
+
+  cout << endl;
+
+  delete[] result;
+
+  return 0;
+}
