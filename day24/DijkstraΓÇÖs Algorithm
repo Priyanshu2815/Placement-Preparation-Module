@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector<int> shortestPath(vector<vector<pair<int, int>>>& adj, int start, int end) {
+  vector<int> distances(adj.size(), INT_MAX);
+  distances[start] = 0;
+
+  queue<int> q;
+  q.push(start);
+
+  while (!q.empty()) {
+    int current = q.front();
+    q.pop();
+
+    for (pair<int, int> neighbor : adj[current]) {
+      int neighborDistance = distances[current] + neighbor.second;
+
+      if (neighborDistance < distances[neighbor.first]) {
+        distances[neighbor.first] = neighborDistance;
+        q.push(neighbor.first);
+      }
+    }
+  }
+
+  if (distances[end] == INT_MAX) {
+    return vector<int>(1, -1);
+  } else {
+    return distances;
+  }
+}
+
+int main() {
+  vector<vector<pair<int, int>>> adj = {{0, 1}, {0, 2}, {1, 3}, {2, 3}};
+  int start = 1, end = 3;
+
+  vector<int> distances = shortestPath(adj, start, end);
+
+  for (int distance : distances) {
+    cout << distance << " ";
+  }
+
+  cout << endl;
+
+  return 0;
+}
