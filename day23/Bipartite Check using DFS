@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+bool isBipartite(vector<vector<int>>& adj, int start, int color) {
+  vector<int> colors(adj.size(), -1);
+  colors[start] = color;
+
+  queue<int> q;
+  q.push(start);
+
+  while (!q.empty()) {
+    int current = q.front();
+    q.pop();
+
+    for (int neighbor : adj[current]) {
+      if (colors[neighbor] == -1) {
+        colors[neighbor] = 1 - colors[current];
+        q.push(neighbor);
+      } else if (colors[neighbor] == colors[current]) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+int main() {
+  vector<vector<int>> adj = {{1, 3}, {0, 2}, {2, 3}, {0, 1}};
+
+  bool isBipartite = isBipartite(adj, 0, 0);
+
+  cout << isBipartite << endl;
+
+  return 0;
+}
