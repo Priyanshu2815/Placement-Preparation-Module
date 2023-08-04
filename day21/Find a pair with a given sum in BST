@@ -1,0 +1,50 @@
+#include <iostream>
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+bool findPair(Node* root, int sum) {
+  if (root == nullptr) {
+    return false;
+  }
+
+  Node* left = root->left;
+  Node* right = root->right;
+
+
+  int leftSum = 0;
+  int rightSum = sum;
+
+ 
+  while (left != nullptr && right != nullptr) {
+
+    if (leftSum + rightSum == sum) {
+      return true;
+    } else if (leftSum + rightSum < sum) {
+      
+      leftSum += left->data;
+      left = left->left;
+    } else {
+     
+      rightSum -= right->data;
+      right = right->right;
+    }
+  }
+  return false;
+}
+
+int main() {
+  Node* root = new Node{10, nullptr, nullptr};
+  root->left = new Node{5, nullptr, nullptr};
+  root->left->right = new Node{6, nullptr, nullptr};
+  root->right = new Node{15, nullptr, nullptr};
+
+  int sum = 16;
+  bool hasPair = findPair(root, sum);
+  std::cout << "Does a pair with sum " << sum << " exist? " << hasPair << std::endl;
+
+  return 0;
+}
