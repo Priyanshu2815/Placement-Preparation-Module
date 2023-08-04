@@ -1,0 +1,52 @@
+#include <iostream>
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+class BSTIterator {
+ public:
+  BSTIterator(Node* root) {
+    stack_.push(root);
+  }
+
+  bool hasNext() {
+    return !stack_.empty();
+  }
+
+  int next() {
+    Node* current = stack_.top();
+    stack_.pop();
+
+    if (current->right != nullptr) {
+      stack_.push(current->right);
+    }
+
+    if (current->left != nullptr) {
+      stack_.push(current->left);
+    }
+
+    return current->data;
+  }
+
+ private:
+  std::stack<Node*> stack_;
+};
+
+int main() {
+  Node* root = new Node{10, nullptr, nullptr};
+  root->left = new Node{5, nullptr, nullptr};
+  root->left->right = new Node{6, nullptr, nullptr};
+  root->right = new Node{15, nullptr, nullptr};
+
+  BSTIterator iterator(root);
+
+  while (iterator.hasNext()) {
+    int data = iterator.next();
+    std::cout << data << std::endl;
+  }
+
+  return 0;
+}
