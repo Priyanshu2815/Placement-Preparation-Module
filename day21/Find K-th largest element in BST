@@ -1,0 +1,41 @@
+#include <iostream>
+
+struct Node {
+  int data;
+  Node* left;
+  Node* right;
+};
+
+int kthLargest(Node* root, int k) {
+  if (root == nullptr) {
+    return -1;
+  }
+
+  int count = 0;
+  Node* current = root;
+  while (current != nullptr) {
+    if (count == k - 1) {
+      return current->data;
+    } else if (count < k - 1) {
+      count++;
+      current = current->right;
+    } else {
+      current = current->left;
+    }
+  }
+
+  return -1;
+}
+
+int main() {
+  Node* root = new Node{10, nullptr, nullptr};
+  root->left = new Node{5, nullptr, nullptr};
+  root->left->right = new Node{6, nullptr, nullptr};
+  root->right = new Node{15, nullptr, nullptr};
+
+  int k = 3;
+  int kthLargestElement = kthLargest(root, k);
+  std::cout << "The kth largest element is " << kthLargestElement << std::endl;
+
+  return 0;
+}
