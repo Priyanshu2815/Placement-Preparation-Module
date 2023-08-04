@@ -1,0 +1,65 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct TrieNode {
+  bool isEndOfWord;
+  vector<TrieNode*> children;
+
+  TrieNode() {
+    isEndOfWord = false;
+    children = vector<TrieNode*>(26, nullptr);
+  }
+};
+
+void insert(TrieNode* root, string word) {
+  TrieNode* node = root;
+  for (char ch : word) {
+    int index = ch - 'a';
+    if (node->children[index] == nullptr) {
+      node->children[index] = new TrieNode();
+    }
+    node = node->children[index];
+  }
+  node->isEndOfWord = true;
+}
+
+bool search(TrieNode* root, string word) {
+  TrieNode* node = root;
+  for (char ch : word) {
+    int index = ch - 'a';
+    if (node->children[index] == nullptr) {
+      return false;
+    }
+    node = node->children[index];
+  }
+  return node->isEndOfWord;
+}
+
+bool startsWith(TrieNode* root, string prefix) {
+  TrieNode* node = root;
+  for (char ch : prefix) {
+    int index = ch - 'a';
+    if (node->children[index] == nullptr) {
+      return false;
+    }
+    node = node->children[index];
+  }
+  return true;
+}
+
+int main() {
+  TrieNode* root = new TrieNode();
+  insert(root, "hello");
+  insert(root, "world");
+
+  cout << search(root, "hello") << endl; // true
+  cout << search(root, "world") << endl; // true
+  cout << search(root, "helloworld") << endl; // false
+  cout << startsWith(root, "hello") << endl; // true
+  cout << startsWith(root, "world") << endl; // true
+  cout << startsWith(root, "helloworld") << endl; // true
+
+  return 0;
+}
