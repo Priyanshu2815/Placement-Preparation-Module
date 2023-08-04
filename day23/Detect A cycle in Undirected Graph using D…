@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+bool isCyclic(vector<vector<int>>& adj, int start) {
+  vector<bool> visited(adj.size(), false);
+
+  for (int i = 0; i < adj.size(); i++) {
+    if (!visited[i]) {
+      if (isCyclicUtil(adj, i, visited)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+bool isCyclicUtil(vector<vector<int>>& adj, int current, vector<bool>& visited) {
+  visited[current] = true;
+
+  for (int neighbor : adj[current]) {
+    if (!visited[neighbor]) {
+      if (isCyclicUtil(adj, neighbor, visited)) {
+        return true;
+      }
+    } else if (visited[neighbor] && neighbor != current) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+int main() {
+  vector<vector<int>> adj = {{1, 2}, {0, 2, 3}, {0, 1}, {3}};
+  int start = 0;
+
+  bool isCyclic = isCyclic(adj, start);
+
+  cout << isCyclic << endl;
+
+  return 0;
+}
